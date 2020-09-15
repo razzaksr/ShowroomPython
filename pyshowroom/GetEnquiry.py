@@ -1,0 +1,81 @@
+from tkinter import *
+from tkinter import messagebox
+
+from pymysql import *
+
+
+class Enquiry(Tk):
+    def __init__(self):
+        Tk.__init__(self)
+        self.title("Enquiry an bike")
+        self.geometry("500x300")
+        f = font = ('Times New Roman', 15)
+        self.head = Label(self, text="Enquiring An Bike", font=('Times New Roman', 20))
+        self.head.grid(row=0, column=10)
+        self.typeask=Label(self,text="Tell us your desired model name",font=f)
+        self.typeask.grid(row=1,column=8)
+        self.ask=Entry(self)
+        self.ask.grid(row=1,column=15)
+        self.bt=Button(self,text="ShowDetails",command=self.fetch)
+        self.bt.grid(row=1,column=30)
+        self.typedesired=Label(self,text="Here is your desired bike details",font=f)
+        self.typedesired.grid(row=2,column=10)
+        self.typemodel = Label(self, text="Model of the bike", font=f)
+        self.typemodel.grid(row=3, column=8)
+        self.model = Label(self, text="", font=f)
+        self.model.grid(row=3, column=30)
+        self.typemodtype = Label(self, text="Model type", font=f)
+        self.typemodtype.grid(row=4, column=8)
+        self.modtype = Label(self, text="", font=f)
+        self.modtype.grid(row=4, column=30)
+        self.typeyear = Label(self, text="Model year", font=f)
+        self.typeyear.grid(row=5, column=8)
+        self.year = Label(self, text="", font=f)
+        self.year.grid(row=5, column=30)
+        self.typecc = Label(self, text="Capacity of engine", font=f)
+        self.typecc.grid(row=6, column=8)
+        self.cc = Label(self, text="", font=f)
+        self.cc.grid(row=6, column=30)
+        self.typemilage = Label(self, text="Average milage", font=f)
+        self.typemilage.grid(row=7, column=8)
+        self.milage = Label(self, text="", font=f)
+        self.milage.grid(row=7, column=30)
+        self.typequan = Label(self, text="Quantity available", font=f)
+        self.typequan.grid(row=8, column=8)
+        self.quan = Label(self, text="", font=f)
+        self.quan.grid(row=8, column=30)
+        self.typewaren = Label(self, text="Warranty", font=f)
+        self.typewaren.grid(row=9, column=8)
+        self.waren = Label(self, text="", font=f)
+        self.waren.grid(row=9, column=30)
+        self.typeprice = Label(self, text="Price", font=f)
+        self.typeprice.grid(row=10, column=8)
+        self.price = Label(self, text="", font=f)
+        self.price.grid(row=10, column=30)
+        self.bk=Button(self,text="Back",command=self.back)
+        self.bk.grid(row=11,column=30)
+    def fetch(self):
+        try:
+            con = connect('localhost', 'root', '', 'showroom')
+            qry="select * from vehicle where modelName='%s'"%(self.ask.get())
+            cur=con.cursor()
+            cur.execute(qry)
+            got=cur.fetchone()
+            messagebox.showinfo("Info","Details will be shown here")
+            self.model.configure(text=got[0])
+            self.modtype.configure(text=got[1])
+            self.year.configure(text=got[2])
+            self.cc.configure(text=got[3])
+            self.milage.configure(text=got[4])
+            self.quan.configure(text=got[5])
+            self.waren.configure(text=got[6])
+            self.price.configure(text=got[7])
+        except Exception as e:
+            messagebox.showinfo("Error",e)
+    def back(self):
+        self.destroy()
+        import pyshowroom.Home as hm
+        hm.home().mainloop()
+
+'''enq=Enquiry()
+enq.mainloop()'''
