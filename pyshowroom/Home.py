@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import messagebox
 
 from pyshowroom.DoSale import Sale
+from pyshowroom.GenerateReport import Report
 from pyshowroom.GetEnquiry import Enquiry
 from pyshowroom.StockAdd import NewStock
 
@@ -34,22 +35,18 @@ class home(Tk):
         self.destroy()
         self.new = NewStock()
         self.new.mainloop()
-        #messagebox.showinfo("Clicked","New Stock clicked")
 
     def enquiry(self):
         self.destroy()
         self.enq = Enquiry()
         self.enq.mainloop()
-        #messagebox.showinfo("Clicked", "Enquiry clicked")
 
     def sale(self):
         self.destroy()
         self.s = Sale()
         self.s.mainloop()
-        #messagebox.showinfo("Clicked", "Sale clicked")
 
     def reports(self):
-        '''self.destroy()
-        self.rec = recordRead()
-        self.rec.mainloop()'''
-        messagebox.showinfo("Clicked", "Reports clicked")
+        self.destroy()
+        self.rep = Report()
+        self.rep.mainloop()
